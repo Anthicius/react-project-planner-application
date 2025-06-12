@@ -1,41 +1,40 @@
-import React, { useState } from "react";
 import noProjectImage from "../assets/no-projects.png";
 import CreateProject from "./CreateProject";
 import Projects from "./Projects";
 
-const Content = () => {
-  const [createNewProject, setCreateNewProject] = useState(false);
-  const [projectList, setProjectList] = useState([]);
-
-const handleCreateProject = (newProject) => {
-  setProjectList((prev) => [...prev, newProject]);
-  setCreateNewProject(false);
-};
-
-  if (projectList.length > 0) {
-    return <Projects projectList={projectList} />;
+const Content = ({
+  projectList,
+  selectedProjectId,
+  isCreating,
+  onCreateProject,
+  onStartCreateProject,
+  onAddTask,
+  onClearTask,
+  onProjectDelete
+}) => {
+  if (isCreating) {
+    return <CreateProject onCreate={onCreateProject} />;
   }
 
-  if (createNewProject) {
-    return <CreateProject onCreate={handleCreateProject} />;
-  }
+  const selectedProject = projectList.find((p) => p.id === selectedProjectId);
 
+  if (selectedProject) {
+    return (
+      <Projects
+        project={selectedProject}
+        onAddTask={onAddTask}
+        onClearTask={onClearTask}
+        onProjectDelete={onProjectDelete}
+      />
+    );
+  }
   return (
-    <div class="flex flex-col justify-center items-center w-dvw pb-40">
-          <img
-            src={noProjectImage}
-            alt="No projects clipboard image"
-            width="80"
-          />
-          <h1 class="font-bold text-xl text-[#625E5B]">No Project Selected</h1>
-          <p class="text-[#9D9D9D]">
-            Select a project or get started with a new one
-          </p>
-          <button onClick={() => setCreateNewProject(true)}>
-            Create new project
-          </button>
+    <div className="flex flex-col justify-center items-center h-dvh pb-40">
+      <img src={noProjectImage} alt="No projects clipboard image" width="80" />
+      <h1 className="font-bold text-xl text-[#625E5B]">No Project Selected</h1>
+      <p className="text-[#9D9D9D]">Select a project or create a new one</p>
+      <button onClick={onStartCreateProject}>Create new project</button>
     </div>
   );
 };
-
 export default Content;

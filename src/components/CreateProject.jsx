@@ -11,6 +11,7 @@ const CreateProject = ({onCreate}) => {
       title: titleRef.current.value,
       description: descriptionRef.current.value,
       dueDate: dueDateRef.current.value,
+      tasks: []
     };
 
     onCreate(newProject)
@@ -18,15 +19,15 @@ const CreateProject = ({onCreate}) => {
 
   return (
 
-      <form class="flex flex-col text-[#605C58] w-[34rem] gap-4" onSubmit={(e)=> handleSubmit(e)}>
-        <div class="flex flex-row justify-end gap-3">
-          <button type="reset">Cancel</button>
-          <button type="submit">Save</button>
+      <form class="flex flex-col text-[#605C58] h-svh gap-4 w-[70%] min-w-[30%] ml-14 mt-[9%]"  onSubmit={(e)=> handleSubmit(e)}>
+        <div class="flex flex-row justify-end gap-1 text-lg">
+          <button type="reset" class=" p-3 pl-8 pr-8">Cancel</button>
+          <button type="submit" class="bg-black p-3 pl-8 pr-8 rounded-xl text-white ">Save</button>
         </div>
         <label class="flex flex-col font-bold">
           TITLE
           <input
-            class=" border-b-4 border-[#CDCDCA] rounded bg-[#E1DFDE] p-1 mt-1"
+            class=" border-b-4 border-[#CDCDCA] rounded bg-[#E1DFDE] p-2 mt-1 hover:border-b-[#676463]"
             type="text"
             ref={titleRef}
             required
@@ -35,7 +36,7 @@ const CreateProject = ({onCreate}) => {
         <label class="flex flex-col font-bold">
           DESCRIPTION
           <textarea
-            class=" border-b-4 border-[#CDCDCA] rounded bg-[#E1DFDE] p-1 mt-1"
+            class=" border-b-4 border-[#CDCDCA] rounded bg-[#E1DFDE] p-2 mt-1 hover:border-b-[#676463]"
             ref={descriptionRef}
             required
           />
@@ -43,7 +44,7 @@ const CreateProject = ({onCreate}) => {
         <label class="flex flex-col font-bold">
           DUE DATE
           <input
-            class=" border-b-4 border-[#CDCDCA] rounded bg-[#E1DFDE] p-1 mt-1"
+            class=" border-b-4 border-[#CDCDCA] rounded bg-[#E1DFDE] p-2 mt-1 hover:border-b-[#676463]"
             type="date"
             ref={dueDateRef}
             required
