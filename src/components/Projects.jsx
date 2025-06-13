@@ -9,7 +9,7 @@ const Projects = ({ project, onAddTask, onClearTask, onProjectDelete }) => {
             <div class="flex flex-col gap-4">
               <h1 class="font-bold text-xl">{project.title}</h1>
               <p class="text-[#939492]">{project.dueDate}</p>
-              <p>{project.description}</p>
+              <p class="whitespace-pre-wrap">{project.description}</p>
             </div>
             <div>
               <button class="text-[#4D4D4B]" onClick={()=> onProjectDelete(project.id)}>Delete</button>

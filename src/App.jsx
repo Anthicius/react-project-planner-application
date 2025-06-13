@@ -1,11 +1,13 @@
 import Content from "./components/Content";
 import Sidebar from "./components/Sidebar";
+import Modal from "./components/Modal";
 import { useState } from "react";
 
 function App() {
   const [projectList, setProjectList] = useState([]);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [isCreatingNewProject, setIsCreatingNewProject] = useState(false);
+  const [showInvalidInputModal, setShowInvalidInputModal] = useState(false);
 
   const handleAddProject = (project) => {
     setProjectList((prev) => [...prev, project]);
@@ -29,9 +31,11 @@ function App() {
   };
 
   const handleProjectDelete = (projectId) => {
-    setProjectList((prev)=>prev.filter((project) => project.id !== projectId))
-    setSelectedProjectId(null)
-  }
+    setProjectList((prev) =>
+      prev.filter((project) => project.id !== projectId)
+    );
+    setSelectedProjectId(null);
+  };
 
   const handleSelectProject = (id) => {
     setSelectedProjectId(id);
@@ -58,28 +62,39 @@ function App() {
     });
   };
 
+  const handleShowInvalidInputModal = (value) => {
+    setShowInvalidInputModal(value);
+  };
+
   return (
-    <div className="flex mt-10 ">
-      <div class="w-3/12">
-        <Sidebar
-          projectList={projectList}
-          onSelectedProject={handleSelectProject}
-          onStartCreate={handleStartCreating}
-        />
+    <>
+      {showInvalidInputModal && (
+        <Modal onClose={() => setShowInvalidInputModal(false)} />
+      )}
+      <div className="flex mt-10 ">
+        <div class="w-3/12">
+          <Sidebar
+            projectList={projectList}
+            onSelectedProject={handleSelectProject}
+            selectedProjectId={selectedProjectId}
+            onStartCreate={handleStartCreating}
+          />
+        </div>
+        <div class="w-4/5">
+          <Content
+            projectList={projectList}
+            selectedProjectId={selectedProjectId}
+            isCreating={isCreatingNewProject}
+            onCreateProject={handleAddProject}
+            onStartCreateProject={handleStartCreating}
+            onAddTask={handleAddTask}
+            onClearTask={handleClearTask}
+            onProjectDelete={handleProjectDelete}
+            onShowInvalidInputModal={handleShowInvalidInputModal}
+          />
+        </div>
       </div>
-      <div class="w-4/5">
-        <Content
-          projectList={projectList}
-          selectedProjectId={selectedProjectId}
-          isCreating={isCreatingNewProject}
-          onCreateProject={handleAddProject}
-          onStartCreateProject={handleStartCreating}
-          onAddTask={handleAddTask}
-          onClearTask={handleClearTask}
-          onProjectDelete={handleProjectDelete}
-        />
-      </div>
-    </div>
+    </>
   );
 }
 
